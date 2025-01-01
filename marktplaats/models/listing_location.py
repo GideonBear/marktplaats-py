@@ -18,4 +18,3 @@ class ListingLocation:
             data.get("latitude"),
             data.get("longitude"),
         )
-

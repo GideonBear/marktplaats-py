@@ -13,6 +13,7 @@ class SortBy(Enum):
     Enumeration of the different sorting methods Marktplaats supports.
     The DATE method sorts by absolute time. So ascending is from oldest to newest.
     """
+
     DATE = "SORT_INDEX"
     PRICE = "PRICE"
     OPTIMIZED = "OPTIMIZED"
@@ -36,17 +37,17 @@ class SearchQuery:
     """
 
     def __init__(
-            self,
-            query,
-            zip_code="",
-            distance=1000000,  # in meters, basically unlimited
-            price_from=None,
-            price_to=None,
-            limit=1,
-            offset=0,
-            sort_by=SortBy.OPTIMIZED,
-            sort_order=SortOrder.ASC,
-            offered_since=None,  # A datetime object
+        self,
+        query,
+        zip_code="",
+        distance=1000000,  # In meters, basically unlimited
+        price_from=None,
+        price_to=None,
+        limit=1,
+        offset=0,
+        sort_by=SortBy.OPTIMIZED,
+        sort_order=SortOrder.ASC,
+        offered_since=None,  # A datetime object
     ):
         params = {
             "limit": str(limit),
@@ -78,7 +79,7 @@ class SearchQuery:
             headers=REQUEST_HEADERS,
         )
 
-        # every request exception should raise here
+        # Every request exception should raise here
         self.response.raise_for_status()
 
         self.body = self.response.text

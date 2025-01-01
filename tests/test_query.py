@@ -13,7 +13,7 @@ class TestSearchQuery(unittest.TestCase):
     """
 
     def test_request(self):
-        with patch('requests.get') as get_request:
+        with patch("requests.get") as get_request:
             get_request.return_value.text = """{
                 "listings": [
                     {
@@ -111,7 +111,7 @@ class TestSearchQuery(unittest.TestCase):
                     }
                 ]
             }"""
-            
+
             query = SearchQuery(
                 "fiets",
                 price_from=10,
@@ -133,7 +133,7 @@ class TestSearchQuery(unittest.TestCase):
                     "query": "fiets",
                     "searchInTitleAndDescription": "true",
                     "viewOptions": "list-view",
-                    "distanceMeters": "1000000",  # basically unlimited
+                    "distanceMeters": "1000000",  # Basically unlimited
                     "postcode": "",
                     "sortBy": "OPTIMIZED",
                     "sortOrder": "INCREASING",
@@ -156,14 +156,14 @@ class TestSearchQuery(unittest.TestCase):
         self.assertIsInstance(listing.location, ListingLocation)
         self.assertEqual(
             datetime(year=2024, month=1, day=2, hour=20, minute=40, second=25, tzinfo=timezone.utc),
-            listing.date
+            listing.date,
         )
         self.assertEqual("https://link.marktplaats.nl/m2064554806", listing.link)
 
         self.assertEqual(7405065, listing.seller.id)
         self.assertFalse(listing.seller.is_verified)
 
-        with patch('requests.get') as get_request:
+        with patch("requests.get") as get_request:
             get_request.return_value.text = """{
                 "bankAccount": true,
                 "phoneNumber": true,
@@ -189,13 +189,13 @@ class TestSearchQuery(unittest.TestCase):
                 },
             )
 
-        self.assertFalse(seller.is_verified)  # should still be false
-        self.assertEqual(7405065, seller.id)  # should still be the same
+        self.assertFalse(seller.is_verified)  # Should still be false
+        self.assertEqual(7405065, seller.id)  # Should still be the same
         self.assertEqual(5, seller.average_score)
         self.assertTrue(seller.bank_account)
         self.assertFalse(seller.identification)
         self.assertTrue(seller.phone_number)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
